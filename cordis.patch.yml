@@ -1,0 +1,18 @@
+# dsh bundle patch: inserts this plugin into a profile's layer stack.
+#
+# The row is created HERE, by an `- insert:` block, and never as a bare
+# `- id: …` entry: in a patch document a bare row only *modifies* an entry that
+# an earlier layer already created, so a bare row here would be skipped with
+# "patch: entry … not found" and the plugin would not mount at all.
+#
+# The profile's own patch then carries a bare row with this id and the saved
+# `config`. That is the row the settings page writes: dsh-config-editor edits it
+# and re-composes the layers to confirm the write is effective. Keeping creation
+# (this bundle layer) and the editable config (the profile layer) apart is what
+# makes both the mount and the save work.
+#
+# This insert carries no `config`: the Config schema defaults supply the initial
+# values.
+- insert:
+    - id: english-teacher-panel
+      name: 'dsh-english-teacher'
